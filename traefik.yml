@@ -1,0 +1,37 @@
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ':80'
+  websecure:
+    address: ':443'
+  metrics:
+    address: ':8082'
+
+metrics:
+  prometheus:
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5
+    entryPoint: metrics
+
+providers:
+  docker:
+    endpoint: 'unix:///var/run/docker.sock'
+    exposedByDefault: false
+  file:
+    filename: /config.yml
+
+certificatesResolvers:
+  leresolver:
+    acme:
+      email: <email>
+      storage: acme.json
+      tlschallenge: true
+  staging:
+    acme:
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      tlschallenge: true
