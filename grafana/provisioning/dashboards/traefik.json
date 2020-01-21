@@ -1,67 +1,34 @@
 {
-  "__inputs": [{
-    "name": "DS_SWB",
-    "label": "Prometheus",
-    "description": "Traefik prometheus metric endpoint",
-    "type": "datasource",
-    "pluginId": "prometheus",
-    "pluginName": "Prometheus"
-  }],
-  "__requires": [{
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "6.3.6"
-    },
-    {
-      "type": "panel",
-      "id": "grafana-piechart-panel",
-      "name": "Pie Chart",
-      "version": "1.3.9"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": ""
-    }
-  ],
   "annotations": {
-    "list": [{
-      "builtIn": 1,
-      "datasource": "-- Grafana --",
-      "enable": true,
-      "hide": true,
-      "iconColor": "rgba(0, 211, 255, 1)",
-      "name": "Annotations & Alerts",
-      "type": "dashboard"
-    }]
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
   },
+  "description": "Dashboard for Traefik2/Prometheus, based upon the one by ichasco.  Updated for Traefik2 metric names.",
   "editable": true,
   "gnetId": 10906,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1569328089102,
-  "links": [{
-    "icon": "external link",
-    "tags": [
-      "link"
-    ],
-    "type": "dashboards"
-  }],
-  "panels": [{
+  "id": 14,
+  "iteration": 1579530707907,
+  "links": [
+    {
+      "icon": "external link",
+      "tags": [
+        "link"
+      ],
+      "type": "dashboards"
+    }
+  ],
+  "panels": [
+    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -70,7 +37,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "format": "s",
       "gauge": {
         "maxValue": 100,
@@ -89,7 +56,8 @@
       "interval": null,
       "links": [],
       "mappingType": 1,
-      "mappingTypes": [{
+      "mappingTypes": [
+        {
           "name": "value to text",
           "value": 1
         },
@@ -106,11 +74,13 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -118,21 +88,25 @@
         "show": false
       },
       "tableColumn": "",
-      "targets": [{
-        "expr": "time() - process_start_time_seconds{job=\"$job\"}",
-        "format": "time_series",
-        "intervalFactor": 2,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "time() - process_start_time_seconds{job=\"$job\"}",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "refId": "A"
+        }
+      ],
       "thresholds": "",
       "title": "Uptime",
       "type": "singlestat",
       "valueFontSize": "80%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
       "valueName": "current"
     },
     {
@@ -144,7 +118,7 @@
         "rgba(26, 206, 22, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "decimals": 0,
       "format": "none",
       "gauge": {
@@ -164,7 +138,8 @@
       "interval": null,
       "links": [],
       "mappingType": 1,
-      "mappingTypes": [{
+      "mappingTypes": [
+        {
           "name": "value to text",
           "value": 1
         },
@@ -181,11 +156,13 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "200%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -193,24 +170,28 @@
         "show": false
       },
       "tableColumn": "",
-      "targets": [{
-        "expr": "sum(increase(traefik_service_requests_total{code=\"404\",method=\"GET\",protocol=~\"$protocol\"}[$interval]))",
-        "format": "time_series",
-        "intervalFactor": 2,
-        "legendFormat": "",
-        "metric": "traefik_requests_total",
-        "refId": "A",
-        "step": 60
-      }],
+      "targets": [
+        {
+          "expr": "sum(increase(traefik_service_requests_total{code=\"404\",method=\"GET\",protocol=~\"$protocol\"}[$interval]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "metric": "traefik_requests_total",
+          "refId": "A",
+          "step": 60
+        }
+      ],
       "thresholds": "0,1",
       "title": "404 Error Count last $interval",
       "type": "singlestat",
       "valueFontSize": "200%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
       "valueName": "max"
     },
     {
@@ -221,7 +202,7 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "fontSize": "80%",
       "format": "short",
       "gridPos": {
@@ -246,13 +227,15 @@
       "options": {},
       "pieType": "pie",
       "strokeWidth": 1,
-      "targets": [{
-        "expr": "traefik_service_requests_total{protocol=~\"$protocol\"}",
-        "format": "time_series",
-        "intervalFactor": 2,
-        "legendFormat": "{{method}} : {{code}}",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "traefik_service_requests_total{protocol=~\"$protocol\"}",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "{{method}} : {{code}}",
+          "refId": "A"
+        }
+      ],
       "title": "$protocol return code",
       "type": "grafana-piechart-panel",
       "valueName": "current"
@@ -266,7 +249,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "format": "ms",
       "gauge": {
         "maxValue": 100,
@@ -285,7 +268,8 @@
       "interval": null,
       "links": [],
       "mappingType": 1,
-      "mappingTypes": [{
+      "mappingTypes": [
+        {
           "name": "value to text",
           "value": 1
         },
@@ -302,11 +286,13 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -314,21 +300,25 @@
         "show": true
       },
       "tableColumn": "",
-      "targets": [{
-        "expr": "sum(traefik_entrypoint_request_duration_seconds_sum) / sum(traefik_entrypoint_requests_total) * 1000",
-        "format": "time_series",
-        "intervalFactor": 2,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(traefik_entrypoint_request_duration_seconds_sum) / sum(traefik_entrypoint_requests_total) * 1000",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "refId": "A"
+        }
+      ],
       "thresholds": "",
       "title": "Average response time",
       "type": "singlestat",
       "valueFontSize": "80%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
       "valueName": "avg"
     },
     {
@@ -336,7 +326,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -370,14 +360,16 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(traefik_service_request_duration_seconds_sum{protocol=~\"$protocol\"}) / sum(traefik_entrypoint_requests_total{protocol=~\"$protocol\"}) * 1000",
-        "format": "time_series",
-        "intervalFactor": 2,
-        "legendFormat": "Average response time (ms)",
-        "refId": "A",
-        "step": 240
-      }],
+      "targets": [
+        {
+          "expr": "sum(traefik_service_request_duration_seconds_sum{protocol=~\"$protocol\"}) / sum(traefik_entrypoint_requests_total{protocol=~\"$protocol\"}) * 1000",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "Average response time (ms)",
+          "refId": "A",
+          "step": 240
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -396,7 +388,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "ms",
           "label": null,
           "logBase": 10,
@@ -423,7 +416,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
@@ -460,15 +453,17 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(increase(traefik_service_requests_total{code=\"404\",method=\"GET\",protocol=~\"$protocol\"}[$interval])) by (service)",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 2,
-        "legendFormat": "{{service}} ",
-        "refId": "A",
-        "step": 240
-      }],
+      "targets": [
+        {
+          "expr": "sum(increase(traefik_service_requests_total{code=\"404\",method=\"GET\",protocol=~\"$protocol\"}[$interval])) by (service)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{service}} ",
+          "refId": "A",
+          "step": 240
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -487,7 +482,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -515,7 +511,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -552,13 +548,15 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(rate(traefik_service_requests_total[$interval]))",
-        "format": "time_series",
-        "intervalFactor": 2,
-        "legendFormat": "Total requests",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(rate(traefik_service_requests_total[$interval]))",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "Total requests",
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -577,7 +575,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -606,7 +605,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -640,15 +639,17 @@
       "spaceLength": 10,
       "stack": true,
       "steppedLine": false,
-      "targets": [{
-        "expr": "process_open_fds{job=~\"$job\"}",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 2,
-        "legendFormat": "{{ instance }}",
-        "refId": "A",
-        "step": 240
-      }],
+      "targets": [
+        {
+          "expr": "process_open_fds{job=~\"$job\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{ instance }}",
+          "refId": "A",
+          "step": 240
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -667,7 +668,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -694,7 +696,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
@@ -731,15 +733,17 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(rate(traefik_service_requests_total{protocol=~\"http|https\",code=\"200\"}[$interval])) by (service)",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 2,
-        "legendFormat": "{{service}} {{method}} {{code}}",
-        "refId": "A",
-        "step": 240
-      }],
+      "targets": [
+        {
+          "expr": "sum(rate(traefik_service_requests_total{protocol=~\"http|https\",code=\"200\"}[$interval])) by (service)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{service}} {{method}} {{code}}",
+          "refId": "A",
+          "step": 240
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -758,7 +762,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -786,7 +791,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "fill": 7,
       "fillGradient": 0,
       "gridPos": {
@@ -824,13 +829,15 @@
       "spaceLength": 10,
       "stack": true,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(traefik_entrypoint_open_connections) by (method)",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "legendFormat": "{{ method }}",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(traefik_entrypoint_open_connections) by (method)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -849,7 +856,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -876,7 +884,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "fill": 7,
       "fillGradient": 0,
       "gridPos": {
@@ -914,13 +922,15 @@
       "spaceLength": 10,
       "stack": true,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(traefik_service_open_connections) by (method)",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "legendFormat": "{{ method }}",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(traefik_service_open_connections) by (method)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ method }}",
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -939,7 +949,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -966,7 +977,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_SWB}",
+      "datasource": "Prometheus",
       "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
@@ -999,21 +1010,25 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [{
-        "alias": "/^[^234].*/",
-        "transform": "negative-Y"
-      }],
+      "seriesOverrides": [
+        {
+          "alias": "/^[^234].*/",
+          "transform": "negative-Y"
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(increase(traefik_service_requests_total{protocol=~\"$protocol\"}[$interval])) by (code)",
-        "format": "time_series",
-        "intervalFactor": 2,
-        "legendFormat": "{{code}}",
-        "refId": "A",
-        "step": 120
-      }],
+      "targets": [
+        {
+          "expr": "sum(increase(traefik_service_requests_total{protocol=~\"$protocol\"}[$interval])) by (code)",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "legendFormat": "{{code}}",
+          "refId": "A",
+          "step": 120
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -1032,7 +1047,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "decimals": 0,
           "format": "short",
           "label": "",
@@ -1057,7 +1073,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 19,
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [
     "traefik",
@@ -1067,10 +1083,14 @@
     "link"
   ],
   "templating": {
-    "list": [{
+    "list": [
+      {
         "allValue": null,
-        "current": {},
-        "datasource": "${DS_SWB}",
+        "current": {
+          "text": "traefik",
+          "value": "traefik"
+        },
+        "datasource": "Prometheus",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1091,8 +1111,11 @@
       },
       {
         "allValue": "traefik",
-        "current": {},
-        "datasource": "${DS_SWB}",
+        "current": {
+          "text": "cadvisor",
+          "value": "cadvisor"
+        },
+        "datasource": "Prometheus",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1113,8 +1136,11 @@
       },
       {
         "allValue": null,
-        "current": {},
-        "datasource": "${DS_SWB}",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Prometheus",
         "definition": "label_values(traefik_service_requests_total, protocol)",
         "hide": 0,
         "includeAll": true,
@@ -1144,7 +1170,8 @@
         "hide": 0,
         "label": "Interval",
         "name": "interval",
-        "options": [{
+        "options": [
+          {
             "selected": false,
             "text": "auto",
             "value": "$__auto_interval_interval"
@@ -1239,6 +1266,5 @@
   "timezone": "",
   "title": "Traefik",
   "uid": "3ipsWfViz",
-  "version": 13,
-  "description": "Dashboard for Traefik2/Prometheus, based upon the one by ichasco. Updated for Traefik2 metric names."
+  "version": 1
 }

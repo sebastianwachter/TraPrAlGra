@@ -33,5 +33,6 @@ certificatesResolvers:
       tlschallenge: true
   staging:
     acme:
+      email: <email>
       caServer: https://acme-staging-v02.api.letsencrypt.org/directory
       tlschallenge: true

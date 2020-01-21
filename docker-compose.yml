@@ -7,6 +7,8 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+    env_file:
+      - .env
     networks:
       - traefik
       - proxy
@@ -24,12 +26,12 @@ services:
       - 'traefik.enable=true'
 
       # Dashboard
-      - 'traefik.http.routers.traefik.rule=Host(`dashboard.yourdomain.tld`)'
+      - 'traefik.http.routers.traefik.rule=Host(`dashboard.${TRAEFIK_DOMAIN}`)'
       - 'traefik.http.routers.traefik.service=api@internal'
-      - 'traefik.http.routers.traefik.tls.certresolver=leresolver'
+      - 'traefik.http.routers.traefik.tls.certresolver=${TRAEFIK_LE_RESOLVER}'
       - 'traefik.http.routers.traefik.entrypoints=websecure'
       - 'traefik.http.routers.traefik.middlewares=authtraefik'
-      - 'traefik.http.middlewares.authtraefik.basicauth.users=<user>:<password>'
+      - 'traefik.http.middlewares.authtraefik.basicauth.users=${TRAEFIK_DASHBOARD_USER}:${TRAEFIK_DASHBOARD_PASSWORD}'
       - 'traefik.http.middlewares.default.chain.middlewares=compress-all@file'
 
       # Global redirect to https
@@ -127,7 +129,7 @@ services:
       org.label-schema.group: 'monitoring'
 
   grafana:
-    image: grafana/grafana:v6.5.3
+    image: grafana/grafana:6.5.3
     container_name: grafana
     restart: unless-stopped
     depends_on:
@@ -136,15 +138,15 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/provisioning/:/etc/grafana/provisioning/
     env_file:
-      - ./grafana/config.monitoring
+      - .env
     networks:
       - traefik
       - proxy
     user: '104'
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.monitor-grafana.rule=Host(`monitor.yourdomain.tld`)'
-      - 'traefik.http.routers.monitor-grafana.tls.certresolver=leresolver'
+      - 'traefik.http.routers.monitor-grafana.rule=Host(`monitor.${TRAEFIK_DOMAIN}`)'
+      - 'traefik.http.routers.monitor-grafana.tls.certresolver=${TRAEFIK_LE_RESOLVER}'
       - 'traefik.http.routers.monitor-grafana.entrypoints=websecure'
       - 'traefik.http.routers.monitor-grafana.middlewares=secure-compress@file'
       - 'traefik.http.middlewares.default.chain.middlewares=compress-all@file'
